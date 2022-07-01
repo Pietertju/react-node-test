@@ -26,7 +26,7 @@ class Chat extends Component<ProfileMenuProps, State> {
         return (
             <div className={"chat"}>
                 {this.props.Messages.map((m,k) => {
-                    return <h3 key={k}>{m.Time} - {m.Username}: {m.Message}</h3>
+                    return <h5 key={k}>{m.Time} - {m.Username}: {m.Message}</h5>
                 })}
             </div>
         )

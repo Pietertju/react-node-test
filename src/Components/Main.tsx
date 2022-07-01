@@ -74,7 +74,7 @@ class Main extends Component<MainProps, State> {
     logout = () => {
         sessionStorage.clear();
         this.setState({
-            LoggedIn: true,
+            LoggedIn: false,
             User: {} as ProfileData
         })
     }
