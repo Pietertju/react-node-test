@@ -1,0 +1,10 @@
+@import "./Shared.scss";
+
+.chat {
+    border: 1px solid black;
+    margin-right: 50px;
+    width: 750px;
+    height: 450px;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+}

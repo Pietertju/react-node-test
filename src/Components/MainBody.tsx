@@ -13,6 +13,7 @@ interface MainBodyProps {
     LoggedIn: Boolean
     User: ProfileData
     login: (user: string, pass: string) => void
+    logout: () => void
 }
 
 class MainBody extends Component<MainBodyProps, State> {   
@@ -30,7 +31,7 @@ class MainBody extends Component<MainBodyProps, State> {
             <Routes>
                 <Route path="/" element={<h1>Main view</h1> }/>
                 <Route path="/addform" element={<AddForm />}/>
-                <Route path="/login" element={<LoginPage LoggedIn={this.props.LoggedIn} User={this.props.User} login={this.props.login}/> }/>
+                <Route path="/login" element={<LoginPage logout={() => this.props.logout} LoggedIn={this.props.LoggedIn} User={this.props.User} login={this.props.login}/> }/>
                 <Route path="/profile" element={<ProfileMenu LoggedIn={this.props.LoggedIn} User={this.props.User}/> }/>
             </Routes>  
         )

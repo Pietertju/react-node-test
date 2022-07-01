@@ -8,6 +8,7 @@ interface State {
 
 interface LoginPageProps {
     login: any;
+    logout: any;
     LoggedIn: Boolean
     User: ProfileData
 }
@@ -31,12 +32,6 @@ class LoginPage extends Component<LoginPageProps, State> {
         this.setState({ [field]: event.target.value } as Pick<State, any>);
     }
 
-    logout = () => {
-        sessionStorage.clear();
-
-        //set logout true
-    }
-
     render() {
         return(
             <div className="loginPage">
@@ -49,7 +44,7 @@ class LoginPage extends Component<LoginPageProps, State> {
                         <input type="password" id="pword" name="lastname" onChange={this.handleChange('loginPassword')}/>
 
                         <input className={"loginButton"} type="submit" value="Login"/>
-                        <input className={"logoutButton"} type="submit" onClick={(e) => {e.preventDefault(); this.logout();}} value="Logout"/>
+                        <input className={"logoutButton"} type="submit" onClick={(e) => {e.preventDefault(); this.props.logout();}} value="Logout"/>
                     </form>
                 </div>
 

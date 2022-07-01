@@ -1,4 +1,5 @@
 export interface Message {
-    Error: boolean;
-    Message: string;
+    Username: string
+    Message: string
+    Time: string
 }

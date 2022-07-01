@@ -71,12 +71,20 @@ class Main extends Component<MainProps, State> {
         })
     }
 
+    logout = () => {
+        sessionStorage.clear();
+        this.setState({
+            LoggedIn: true,
+            User: {} as ProfileData
+        })
+    }
+
     render() {
         return (
             <div className = {"application"}>
                 <BrowserRouter>
                     <HeaderMenu LoggedIn={this.state.LoggedIn} User={this.state.User} />
-                    <MainBody LoggedIn={this.state.LoggedIn} User={this.state.User} login={this.login} />
+                    <MainBody logout={() => this.logout()} LoggedIn={this.state.LoggedIn} User={this.state.User} login={(u: string, p: string) => this.login(u, p)} />
                 </BrowserRouter>
             </div>
         );
