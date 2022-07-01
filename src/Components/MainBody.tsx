@@ -109,13 +109,13 @@ class MainBody extends Component<MainBodyProps, State> {
     }
 
     addMessage = (message: string, admin: Boolean) => {
-        // if(this.state.hubConnected) {
-        //     if(admin) {
-        //         this.state.hubConnection.invoke("sendAdminMessage", message)
-        //     } else {
-        //         this.state.hubConnection.invoke("sendUserMessage", message)
-        //     }
-        // }
+        if(this.state.hubConnected) {
+            if(admin) {
+                this.state.hubConnection.invoke("sendAdminMessage", message)
+            } else {
+                this.state.hubConnection.invoke("sendUserMessage", message)
+            }
+        }
     }
 
     receiveMessage = (message: Message) => {

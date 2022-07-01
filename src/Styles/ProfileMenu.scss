@@ -1,5 +1,17 @@
 @import "./Shared.scss";
 
-.chatSection {
+.ChatSection {
     float: right;
+    width: 750px;
+    height: 450px;
+    margin-right: 50px;
+}
+
+.ProfileInformation {
+    float: left;
+}
+
+.ChatInput {
+    width: 100%;
+    margin-top: 5px;
 }
