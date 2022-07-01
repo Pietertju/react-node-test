@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import HeaderMenu from "./HeaderMenu";
 import MainBody from "./MainBody";
 import "../Styles/Main.scss"
-import { AuthenticateClient, LoginModel } from "../Client/HomeClient";
-import { BrowserRouter } from "react-router-dom";
+import { AuthenticateClient, LoginModel, LoginResponse } from "../Client/HomeClient";
+import { BrowserRouter, Navigate } from "react-router-dom";
+
 
 interface MainProps {
     
@@ -12,6 +13,7 @@ interface MainProps {
 interface State {
     LoggedIn: Boolean
     User: ProfileData;
+    shouldRedirect: Boolean;
 }
 
 class Main extends Component<MainProps, State> {
@@ -21,7 +23,13 @@ class Main extends Component<MainProps, State> {
 
         this.state = {
             LoggedIn: false,
-            User: {} as ProfileData
+            User: {
+                Username: "",
+                Email: "",
+                Id: "",
+                Roles: ["", ""]
+            } as ProfileData,
+            shouldRedirect: false
         }
 
         this.checkLoggedIn()
@@ -30,17 +38,23 @@ class Main extends Component<MainProps, State> {
     checkLoggedIn = () => {
         let client = new AuthenticateClient()
         client.isLogged().then(res => {
-            this.setState({
-                User: {
-                    Id: res.id,
-                    Username: res.username,
-                    Email: res.email,
-                    Roles: res.roles
-                } as ProfileData,
-                LoggedIn: true
-            })
+            this.setUserLogin(res)
         }).catch(err => {
-            alert("Not logged in")
+            alert("Not logged in \n" + err)
+        })
+    }
+
+    setUserLogin = (user: LoginResponse) => {
+        let User: ProfileData = {
+            Id: user.id as string,
+            Username: user.username as string,
+            Email: user.email as string,
+            Roles: user.roles as string[]
+        }
+
+        this.setState({
+            LoggedIn: true,
+            User: User,
         })
     }
 
@@ -53,21 +67,22 @@ class Main extends Component<MainProps, State> {
         client.login(login).then(res => {
             let token = res.token
             sessionStorage.setItem("userLoginToken", token as string)        
+            this.setUserLogin(res)
 
-            let User: ProfileData = {
-                Id: res.id as string,
-                Username: res.username as string,
-                Email: res.email as string,
-                Roles: res.roles as string[]
-            }
-
-            this.setState({
-                LoggedIn: true,
-                User: User
-            })
+            this.redirection()
 
         }).catch(err => {
             alert(err)
+        })
+    }
+
+    redirection = () => {
+        this.setState({
+            shouldRedirect: true
+        }, () => {
+            this.setState({
+                shouldRedirect: false
+            })
         })
     }
 
@@ -75,7 +90,12 @@ class Main extends Component<MainProps, State> {
         sessionStorage.clear();
         this.setState({
             LoggedIn: false,
-            User: {} as ProfileData
+            User: {
+                Username: "",
+                Email: "",
+                Id: "",
+                Roles: ["", ""]
+            } as ProfileData
         })
     }
 
@@ -84,7 +104,8 @@ class Main extends Component<MainProps, State> {
             <div className = {"application"}>
                 <BrowserRouter>
                     <HeaderMenu LoggedIn={this.state.LoggedIn} User={this.state.User} />
-                    <MainBody logout={() => this.logout()} LoggedIn={this.state.LoggedIn} User={this.state.User} login={(u: string, p: string) => this.login(u, p)} />
+                    <MainBody logout={() => this.logout()} LoggedIn={this.state.LoggedIn} User={this.state.User} login={(u: string, p: string) => this.login(u, p)} />                 
+                    {this.state.shouldRedirect ? <Navigate to="/profile" /> : ""}
                 </BrowserRouter>
             </div>
         );

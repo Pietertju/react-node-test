@@ -28,7 +28,7 @@ class ProfileMenu extends Component<ProfileMenuProps, State> {
 
 
     sendMessage = () => {
-        if(this.state.InputText.trim() !== "") {
+        if(this.state.InputText.trim() !== "" && this.props.hubConnected) {
             this.props.AddMessage(this.state.InputText, false)
             this.setState({
                 InputText: ""
@@ -37,7 +37,7 @@ class ProfileMenu extends Component<ProfileMenuProps, State> {
     }
 
     sendAdminMessage = () => {
-        if(this.state.InputText.trim() !== "") {
+        if(this.state.InputText.trim() !== "" && this.props.hubConnected) {
             this.props.AddMessage(this.state.InputText, true)
             this.setState({
                 InputText: ""
@@ -64,12 +64,12 @@ class ProfileMenu extends Component<ProfileMenuProps, State> {
                 }) : ""}</h3>
                 <div className={"chatSection"}>
                     <h2>Connected: {this.props.hubConnected ? "True" : "False"} - - - - - - - - - Users connected: {this.props.UsersConnected.toString()}</h2>
-                    {/* <input onClick={() => {this.addMessage()}} type="submit"/> */}
                     <Chat Messages={this.props.Messages}/>
                     <label>
                         <input value={this.state.InputText} onChange={(evt) =>  {this.onChange(evt)}} placeholder="Message" />
                     </label>
-                    <input type="submit" onClick={() => this.sendMessage()} />{this.props.User.Roles.includes("Admin") ? <input type="submit" onClick={() => this.sendAdminMessage()}/> : ""}
+                    <input type="submit" onClick={() => this.sendMessage()} />
+                    {this.props.User.Roles.includes("Admin") ? <input type="submit" onClick={() => this.sendAdminMessage()}/> : ""}
                 </div>
             </div>
         )

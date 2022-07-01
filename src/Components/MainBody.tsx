@@ -96,7 +96,7 @@ class MainBody extends Component<MainBodyProps, State> {
         });  
     }
 
-    componentWillReceiveProps(newProps: MainBodyProps) {
+    UNSAFE_componentWillReceiveProps(newProps: MainBodyProps) {
         if(newProps.LoggedIn) {
             this.createConnection()
         }
@@ -109,13 +109,13 @@ class MainBody extends Component<MainBodyProps, State> {
     }
 
     addMessage = (message: string, admin: Boolean) => {
-        if(this.state.hubConnected) {
-            if(admin) {
-                this.state.hubConnection.invoke("sendAdminMessage", message)
-            } else {
-                this.state.hubConnection.invoke("sendUserMessage", message)
-            }
-        }
+        // if(this.state.hubConnected) {
+        //     if(admin) {
+        //         this.state.hubConnection.invoke("sendAdminMessage", message)
+        //     } else {
+        //         this.state.hubConnection.invoke("sendUserMessage", message)
+        //     }
+        // }
     }
 
     receiveMessage = (message: Message) => {
@@ -130,7 +130,7 @@ class MainBody extends Component<MainBodyProps, State> {
                 <Route path="/" element={<h1>Main view</h1> }/>
                 <Route path="/addform" element={<AddForm />}/>
                 <Route path="/login" element={<LoginPage logout={this.props.logout} LoggedIn={this.props.LoggedIn} User={this.props.User} login={this.props.login}/> }/>
-                <Route path="/profile" element={<ProfileMenu UsersConnected={this.state.UsersConnected} hubConnected={this.state.hubConnected} AddMessage={(message: string, admin: Boolean) => {this.addMessage(message, admin)}} Messages={this.state.Messages} LoggedIn={this.props.LoggedIn} User={this.props.User}/> }/>
+                <Route path="/profile" element={<ProfileMenu UsersConnected={this.state.UsersConnected} hubConnected={this.state.hubConnected} AddMessage={this.addMessage} Messages={this.state.Messages} LoggedIn={this.props.LoggedIn} User={this.props.User}/> }/>
             </Routes>  
         )
     }

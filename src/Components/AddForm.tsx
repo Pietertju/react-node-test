@@ -145,9 +145,9 @@ class AddForm extends Component<AddFormProps, State> {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.UserList.map(user => {
+                        {this.state.UserList.map((user, k) => {
                             return (
-                                <tr>
+                                <tr key={k}>
                                     <td className="usertableData">{user.Id}</td>
                                     <td className="usertableData">{user.Username}</td>
                                     <td className="usertableData">{user.Password}</td>
@@ -167,7 +167,7 @@ class AddForm extends Component<AddFormProps, State> {
                         <input type="password" id="pword" name="lastname" onChange={this.handleChange('inputPassword')}/>
 
                         <label>Email</label>
-                        <input type="text" id="uname" name="firstname" placeholder="test@abc.com" onChange={this.handleChange('inputEmail')}/>
+                        <input type="text" id="email" name="firstname" placeholder="test@abc.com" onChange={this.handleChange('inputEmail')}/>
 
                         <input type="submit" value="Submit"/>
                     </form>
