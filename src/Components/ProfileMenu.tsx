@@ -69,7 +69,7 @@ class ProfileMenu extends Component<ProfileMenuProps, State> {
                     <label>
                         <input value={this.state.InputText} onChange={(evt) =>  {this.onChange(evt)}} placeholder="Message" />
                     </label>
-                    <input type="submit" onClick={() => this.sendMessage()} /><input type="submit" onClick={() => this.sendAdminMessage()} />
+                    <input type="submit" onClick={() => this.sendMessage()} />{this.props.User.Roles.includes("Admin") ? <input type="submit" onClick={() => this.sendAdminMessage()}/> : ""}
                 </div>
             </div>
         )
