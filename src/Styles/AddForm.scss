@@ -1,0 +1,66 @@
+@import "./Shared.scss";
+
+input[type=text], input[type=password], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  
+  .submissionForm {
+    border-radius: 5px;
+    padding-right: 20px;
+    float: right;
+  }
+
+  .errorMessageList {
+    position: absolute!important;
+    top: 15px!important;
+    right: 15px!important;
+    z-index: 10;
+  }
+
+  .errorMessage {
+    margin-bottom: 15px;
+    background-color: lightgray;
+  }
+  
+  .errorMessageHeader {
+    background-color: darkgrey;
+  }
+
+  .btn-close {
+    position: absolute;
+    right: 20px;
+  }
+
+  .usertable {
+    width: auto;
+    margin: 0 auto;
+    float: left;
+  }
+
+  .usertableClose:hover {
+    cursor: pointer;
+  }
+
+  .usertableData {
+    margin: 0 auto;
+  }

@@ -1,0 +1,12 @@
+@import './Variables.scss'; 
+@import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+
+//overwriting bootstrap theme variables with our variables 
+$dark: $black;
+$light: $gray-light;
+label{
+    color: $gray-verydark!important;
+}
+
+
