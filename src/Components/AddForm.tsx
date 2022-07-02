@@ -55,7 +55,7 @@ class AddForm extends Component<AddFormProps, State> {
     }
 
     getUsers = () => {
-        let client = new UserClient();
+        let client = new UserClient(process.env.BACKEND_URL);
         client.getUsers().then(res => {
             if(res.userList) {
                 let userList: UserProperties[] = new Array(res.userList.length);
@@ -79,21 +79,8 @@ class AddForm extends Component<AddFormProps, State> {
         })
     }
 
-    // hashIt = async (password: string) : Promise<string> => {
-    //     const saltRounds = 10
-        
-    //     let hashedPassword = await new Promise((resolve, reject) => {
-    //         bcrypt.hash(password, saltRounds, (err, res) => {
-    //             if(err) reject(err)
-    //             resolve(res)
-    //         });
-    //     })
-
-    //     return hashedPassword as string
-    // }
-
     submitForm = async () => {
-        let client = new UserClient();
+        let client = new UserClient(process.env.BACKEND_URL);
         
         let user = {
             id: 0,
@@ -111,7 +98,7 @@ class AddForm extends Component<AddFormProps, State> {
     }
 
     deleteUser = (id: number) => {
-        let client = new UserClient();
+        let client = new UserClient(process.env.BACKEND_URL);
         
         client.delete(id).then(res => {
             if(res.output) {
