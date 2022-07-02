@@ -32,14 +32,35 @@ class MainBody extends Component<MainBodyProps, State> {
             Messages: [],
             UsersConnected: 0
         }
+    }
 
+    componentDidUpdate() {
         if(this.props.LoggedIn) {
             this.createConnection()
         }
     }
 
-    createConnection = () => {
+    logout = () => {
+        if(this.state.hubConnected) {
+            this.state.hubConnection.stop();
+            this.setState({
+                hubConnected: false
+            })
+        }
+
+        this.props.logout()
+    }
+
+    login = (username: string, password: string) => {
+        this.props.login(username, password)
+    }
+
+    createConnection = (newProps?: string) => {
         if(this.state.hubConnected) return;
+
+        this.setState({
+            hubConnected: true
+        })
         const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("https://localhost:44364/chat", {
                 accessTokenFactory: () =>                       
@@ -47,7 +68,8 @@ class MainBody extends Component<MainBodyProps, State> {
                 })
             .configureLogging(signalR.LogLevel.Information)  
             .build();
- 
+
+        hubConnection.off("giveMessage")
         hubConnection.on("giveMessage", (m, u, t) => {
             let message = {
                 Username: u,
@@ -57,6 +79,7 @@ class MainBody extends Component<MainBodyProps, State> {
             this.receiveMessage(message)
         })
 
+        hubConnection.off("backlogMessages")
         hubConnection.on("backlogMessages", (m, u, t) => {
             let message = {
                 Username: u,
@@ -66,6 +89,7 @@ class MainBody extends Component<MainBodyProps, State> {
             this.receiveMessage(message)
         })
 
+        hubConnection.off("setClientMessage")
         hubConnection.on("setClientMessage", (m, t) => {
             let message = {
                 Username: "",
@@ -75,6 +99,7 @@ class MainBody extends Component<MainBodyProps, State> {
             this.receiveMessage(message)         
         })
 
+        hubConnection.off("setUsersConnected")
         hubConnection.on("setUsersConnected", (c) => {
             this.setState({
                 UsersConnected: c
@@ -90,17 +115,20 @@ class MainBody extends Component<MainBodyProps, State> {
                 hubConnection: hubConnection
             })
 
-            hubConnection.invoke("getUserMessages")   
+            if(this.state.Messages.length === 0) hubConnection.invoke("getUserMessages")   
         }).catch(err => {
+            this.setState({
+                hubConnected: false
+            })
             alert(err)
         });  
     }
 
-    UNSAFE_componentWillReceiveProps(newProps: MainBodyProps) {
-        if(newProps.LoggedIn) {
-            this.createConnection()
-        }
-    }
+    // UNSAFE_componentWillReceiveProps(newProps: MainBodyProps) {
+    //     if(newProps.LoggedIn) {
+    //         this.createConnection()
+    //     }
+    // }
 
     componentWillUnmount () {
         if(this.state.hubConnected) {
@@ -127,9 +155,9 @@ class MainBody extends Component<MainBodyProps, State> {
     render() {
         return(
             <Routes>
-                <Route path="/" element={<h1>Main view</h1> }/>
+                <Route path="/" element={<h1>Main view: {this.props.LoggedIn ? "True" : "false"}</h1> }/>
                 <Route path="/addform" element={<AddForm />}/>
-                <Route path="/login" element={<LoginPage logout={this.props.logout} LoggedIn={this.props.LoggedIn} User={this.props.User} login={this.props.login}/> }/>
+                <Route path="/login" element={<LoginPage logout={() => {this.logout()}} LoggedIn={this.props.LoggedIn} User={this.props.User} login={(username: string, password: string) => {this.login(username, password)}}/> }/>
                 <Route path="/profile" element={<ProfileMenu UsersConnected={this.state.UsersConnected} hubConnected={this.state.hubConnected} AddMessage={this.addMessage} Messages={this.state.Messages} LoggedIn={this.props.LoggedIn} User={this.props.User}/> }/>
             </Routes>  
         )

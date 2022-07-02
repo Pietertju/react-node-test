@@ -21,10 +21,14 @@ class Chat extends Component<ProfileMenuProps, State> {
         }
     }
 
+    componentDidMount() {
+        var elem = document.getElementById('Chat');
+        if(elem) elem.scrollTop = elem.scrollHeight
+    }
 
     render() {
         return (
-            <div className={"Chat"}>
+            <div id={"Chat"} className={"Chat"}>
                 {this.props.Messages.map((m,k) => {
                     return <h5 key={k}>{m.Time} - {m.Username}: {m.Message}</h5>
                 })}
