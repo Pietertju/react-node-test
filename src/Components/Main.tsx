@@ -36,7 +36,7 @@ class Main extends Component<MainProps, State> {
     }
 
     checkLoggedIn = () => {
-        let client = new AuthenticateClient(process.env.BACKEND_URL)
+        let client = new AuthenticateClient(process.env.REACT_APP_BACKEND_URL)
         client.isLogged().then(res => {
             this.setUserLogin(res)
         }).catch(err => {
@@ -59,7 +59,7 @@ class Main extends Component<MainProps, State> {
     }
 
     login = (username: string, password: string) => {
-        let client = new AuthenticateClient(process.env.BACKEND_URL)
+        let client = new AuthenticateClient(process.env.REACT_APP_BACKEND_URL)
         let login = {
             username: username,
             password: password

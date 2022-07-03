@@ -55,7 +55,7 @@ class AddForm extends Component<AddFormProps, State> {
     }
 
     getUsers = () => {
-        let client = new UserClient(process.env.BACKEND_URL);
+        let client = new UserClient(process.env.REACT_APP_BACKEND_URL);
         client.getUsers().then(res => {
             if(res.userList) {
                 let userList: UserProperties[] = new Array(res.userList.length);
@@ -80,7 +80,7 @@ class AddForm extends Component<AddFormProps, State> {
     }
 
     submitForm = async () => {
-        let client = new UserClient(process.env.BACKEND_URL);
+        let client = new UserClient(process.env.REACT_APP_BACKEND_URL);
         
         let user = {
             id: 0,
@@ -98,7 +98,7 @@ class AddForm extends Component<AddFormProps, State> {
     }
 
     deleteUser = (id: number) => {
-        let client = new UserClient(process.env.BACKEND_URL);
+        let client = new UserClient(process.env.REACT_APP_BACKEND_URL);
         
         client.delete(id).then(res => {
             if(res.output) {
