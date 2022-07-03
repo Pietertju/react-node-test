@@ -44,8 +44,9 @@ class LoginPage extends Component<LoginPageProps, State> {
                         <input type="password" id="pword" name="lastname" onChange={this.handleChange('loginPassword')}/>
 
                         <input className={"loginButton"} type="submit" value="Login"/>
-                        <input className={"logoutButton"} type="submit" onClick={(e) => {e.preventDefault(); this.props.logout();}} value="Logout"/>
                     </form>
+                    <input className={"logoutButton"} type="submit" onClick={() => {alert(":D"); this.props.logout()}} value="Logout"/>
+
                 </div>
 
                 

@@ -41,14 +41,13 @@ class MainBody extends Component<MainBodyProps, State> {
     }
 
     logout = () => {
+        this.props.logout()
         if(this.state.hubConnected) {
-            this.state.hubConnection.stop();
+            if(this.state.hubConnection) this.state.hubConnection.stop();
             this.setState({
                 hubConnected: false
             })
-        }
-
-        this.props.logout()
+        }        
     }
 
     login = (username: string, password: string) => {
@@ -62,7 +61,9 @@ class MainBody extends Component<MainBodyProps, State> {
             hubConnected: true
         })
         const hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl("https://localhost:44364/chat", {
+            .withUrl("https://pebbersbackend.azure-api.net/v1/chat/negotiate", {
+                skipNegotiation: true,
+                transport: signalR.HttpTransportType.WebSockets,
                 accessTokenFactory: () =>                       
                             (sessionStorage.getItem("userLoginToken") as string)
                 })
@@ -108,7 +109,6 @@ class MainBody extends Component<MainBodyProps, State> {
 
         // Starts the SignalR connection
         hubConnection.start().then(a => {          
-
             // Once started, invokes the onconnected in our ChatHub inside our ASP.NET Core application.              
             this.setState({
                 hubConnected: true,
@@ -120,7 +120,7 @@ class MainBody extends Component<MainBodyProps, State> {
             this.setState({
                 hubConnected: false
             })
-            alert(err)
+            //alert("_" + err)
         });  
     }
 
@@ -132,7 +132,7 @@ class MainBody extends Component<MainBodyProps, State> {
 
     componentWillUnmount () {
         if(this.state.hubConnected) {
-            this.state.hubConnection.stop();
+            if(this.state.hubConnection) this.state.hubConnection.stop();
         }
     }
 
