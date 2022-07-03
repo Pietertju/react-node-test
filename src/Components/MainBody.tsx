@@ -61,8 +61,8 @@ class MainBody extends Component<MainBodyProps, State> {
             hubConnected: true
         })
         const hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl("https://pebbersbackend.azure-api.net/v1/chat/negotiate", {
-                skipNegotiation: true,
+            .withUrl("https://pebbersapibackend.azurewebsites.net/chat", {
+                skipNegotiation: false,
                 transport: signalR.HttpTransportType.WebSockets,
                 accessTokenFactory: () =>                       
                             (sessionStorage.getItem("userLoginToken") as string)
