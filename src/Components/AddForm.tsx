@@ -72,10 +72,10 @@ class AddForm extends Component<AddFormProps, State> {
                 });
                 this.setUserlist(userList)
             } else {
-                alert("Nothing found")
+                this.raiseException("Nothing found")
             }
         }).catch(err => {
-            alert(err.output)
+            this.raiseException(err.output)
         })
     }
 

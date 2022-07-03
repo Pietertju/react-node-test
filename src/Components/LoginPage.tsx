@@ -34,23 +34,20 @@ class LoginPage extends Component<LoginPageProps, State> {
 
     render() {
         return(
+            (!this.props.LoggedIn) ?
             <div className="loginPage">
                 <div className="loginPageForm">
                     <form onSubmit={(e: any) => {e.preventDefault(); this.submitLogin();}}>
                         <label>Username</label>
                         <input type="text" id="uname" name="firstname" placeholder="Your name.." onChange={this.handleChange('loginName')}/>
-
                         <label>Password</label>
                         <input type="password" id="pword" name="lastname" onChange={this.handleChange('loginPassword')}/>
-
-                        <input className={"loginButton"} type="submit" value="Login"/>
+                        <input className={"loginButton"} type="submit" value="Login"/>          
                     </form>
-                    <input className={"logoutButton"} type="submit" onClick={() => {alert(":D"); this.props.logout()}} value="Logout"/>
-
                 </div>
-
-                
             </div>
+            :
+            <input className={"logoutButton"} type="submit" onClick={() => {this.props.logout()}} value="Logout"/>
         )
     }
 }

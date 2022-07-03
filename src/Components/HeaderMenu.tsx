@@ -29,7 +29,7 @@ class HeaderMenu extends Component<HeaderMenuProps, State> {
                         <Nav.Link as={Link} to="/" eventKey="home">Mainpage</Nav.Link>
                     </Nav.Item>
                     <Nav.Item as="li">
-                        <Nav.Link as={Link} to="/login" eventKey="login">Login</Nav.Link>
+                        <Nav.Link as={Link} to="/login" eventKey="login">{this.props.LoggedIn ? "Logout" : "Login"}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item as="li">
                         <Nav.Link as={Link} to="/addform" eventKey="addform">AddForm</Nav.Link>

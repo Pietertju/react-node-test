@@ -4,6 +4,7 @@ import MainBody from "./MainBody";
 import "../Styles/Main.scss"
 import { AuthenticateClient, LoginModel, LoginResponse } from "../Client/HomeClient";
 import { BrowserRouter, Navigate } from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
 
 
 interface MainProps {
@@ -14,6 +15,7 @@ interface State {
     LoggedIn: Boolean
     User: ProfileData;
     shouldRedirect: Boolean;
+    errorMessageList: String[],
 }
 
 class Main extends Component<MainProps, State> {
@@ -29,7 +31,8 @@ class Main extends Component<MainProps, State> {
                 Id: "",
                 Roles: ["", ""]
             } as ProfileData,
-            shouldRedirect: false
+            shouldRedirect: false,
+            errorMessageList: []
         }
 
         this.checkLoggedIn()
@@ -40,7 +43,7 @@ class Main extends Component<MainProps, State> {
         client.isLogged().then(res => {
             this.setUserLogin(res)
         }).catch(err => {
-            alert("Not logged in \n" + err)
+            this.raiseException("Not logged in \n" + err)
         })
     }
 
@@ -72,7 +75,7 @@ class Main extends Component<MainProps, State> {
             this.redirection()
 
         }).catch(err => {
-            alert(err)
+            this.raiseException(err)
         })
     }
 
@@ -99,6 +102,19 @@ class Main extends Component<MainProps, State> {
         })
     }
 
+    raiseException = (message: string) => {
+        let newErrorMessageList: String[] = this.state.errorMessageList;
+        newErrorMessageList.push(message);
+        this.setState({ errorMessageList: newErrorMessageList });
+        console.log(message);
+    }
+    
+    removeException = (index: number) => {
+        let newErrorMessageList: String[] = this.state.errorMessageList;
+        newErrorMessageList.splice(index, 1);
+        this.setState({ errorMessageList: newErrorMessageList });
+    }
+
     render() {
         return (
             <div className = {"application"}>
@@ -107,6 +123,9 @@ class Main extends Component<MainProps, State> {
                     <MainBody logout={() => this.logout()} LoggedIn={this.state.LoggedIn} User={this.state.User} login={(u: string, p: string) => this.login(u, p)} />                 
                     {this.state.shouldRedirect ? <Navigate to="/profile" /> : ""}
                 </BrowserRouter>
+                <div className="mt-4 databaseTable">
+                    <ErrorMessage deleteCallback={this.removeException} errorList={this.state.errorMessageList}></ErrorMessage>
+                </div>
             </div>
         );
     }   

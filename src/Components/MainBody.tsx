@@ -120,7 +120,6 @@ class MainBody extends Component<MainBodyProps, State> {
             this.setState({
                 hubConnected: false
             })
-            //alert("_" + err)
         });  
     }
 
