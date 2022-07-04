@@ -148,7 +148,10 @@ class MainBody extends Component<MainBodyProps, State> {
     receiveMessage = (message: Message) => {
         this.setState((prevState) => ({
             Messages: [...prevState.Messages, message]
-        }))
+        }), () => {
+            var elem = document.getElementById('Chat');
+            if(elem) elem.scrollTop = elem.scrollHeight
+        })
     }
 
     render() {
