@@ -26,8 +26,9 @@ input[type=text], input[type=password], select, textarea {
   
   .submissionForm {
     border-radius: 5px;
-    padding-right: 20px;
-    float: right;
+    padding-left: 20px;
+    float: left;
+    width: 500px;
   }
 
   .errorMessageList {
@@ -49,18 +50,4 @@ input[type=text], input[type=password], select, textarea {
   .btn-close {
     position: absolute;
     right: 20px;
-  }
-
-  .usertable {
-    width: auto;
-    margin: 0 auto;
-    float: left;
-  }
-
-  .usertableClose:hover {
-    cursor: pointer;
-  }
-
-  .usertableData {
-    margin: 0 auto;
   }

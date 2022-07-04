@@ -19,7 +19,7 @@ class ErrorMessage extends Component<ErrorProps> {
                 <div className={"errorMessageList"}>
                     {this.props.errorList.map((message, index) => {
                         return (
-                            <Toast key={index} className={"errorMessage"} autohide={true} delay={5000} style={{maxWidth: '200px'}} onClose={() => this.props.deleteCallback(index)}>
+                            <Toast key={index} className={"errorMessage"} autohide={true} delay={3000} style={{maxWidth: '200px'}} onClose={() => this.props.deleteCallback(index)}>
                                 <Toast.Header className={"errorMessageHeader"}>
                                     <FontAwesomeIcon className="mr-2" icon={farError} size='1x' />
                                     <strong className="mr-auto">Error</strong>

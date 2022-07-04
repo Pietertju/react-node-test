@@ -120,7 +120,7 @@ class Main extends Component<MainProps, State> {
             <div className = {"application"}>
                 <BrowserRouter>
                     <HeaderMenu LoggedIn={this.state.LoggedIn} User={this.state.User} />
-                    <MainBody logout={() => this.logout()} LoggedIn={this.state.LoggedIn} User={this.state.User} login={(u: string, p: string) => this.login(u, p)} />                 
+                    <MainBody raiseException={this.raiseException} removeException={this.removeException} logout={() => this.logout()} LoggedIn={this.state.LoggedIn} User={this.state.User} login={(u: string, p: string) => this.login(u, p)} />                 
                     {this.state.shouldRedirect ? <Navigate to="/profile" /> : ""}
                 </BrowserRouter>
                 <div className="mt-4 databaseTable">

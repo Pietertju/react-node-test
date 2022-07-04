@@ -13,7 +13,7 @@ interface ProfileMenuProps {
     Messages: Message[]
     AddMessage: (message: string, admin: Boolean) => void
     hubConnected: Boolean
-    UsersConnected: Number
+    UsersConnected: String[]
 }
 
 class ProfileMenu extends Component<ProfileMenuProps, State> {   
@@ -65,7 +65,7 @@ class ProfileMenu extends Component<ProfileMenuProps, State> {
                     }) : ""}</h3>
                 </div>
                 <div className={"ChatSection"}>
-                    <h2>Connected: {this.props.hubConnected ? "True" : "False"} - - - - - - - - - Users connected: {this.props.UsersConnected.toString()}</h2>
+                    <h2>Connected: {this.props.hubConnected ? "True" : "False"} - - - - - - - - - Users connected: {this.props.UsersConnected.length.toString()}</h2>
                     <Chat Messages={this.props.Messages}/>
                     <form onSubmit={(e) => {e.preventDefault(); this.sendMessage()}}>
                         <input type="text" onSubmit={() => {this.sendMessage()}} className={"ChatInput"} value={this.state.InputText} onChange={(evt) =>  {this.onChange(evt)}} placeholder="Message" />

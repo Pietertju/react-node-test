@@ -7,13 +7,13 @@ interface State {
 
 }
 
-interface ProfileMenuProps {
+interface ChatProps {
     Messages: Message[]
 }
 
-class Chat extends Component<ProfileMenuProps, State> {   
+class Chat extends Component<ChatProps, State> {   
 
-    constructor(props: ProfileMenuProps) {
+    constructor(props: ChatProps) {
         super(props);
 
         this.state = {
